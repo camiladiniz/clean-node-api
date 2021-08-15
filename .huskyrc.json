@@ -1,0 +1,6 @@
+{
+    "comment": "pre-commit: eslint",
+    "hooks": {
+        "pre-commit": "lint-staged"
+    }
+}

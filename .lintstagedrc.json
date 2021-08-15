@@ -1,0 +1,7 @@
+{
+    "comment": "validará arquivos do tipo typescript (um array será passado) que forem ser commitados através do eslint. se o comando falhar o lintstaged vai travar e o husk vai travar. Tentará arrumar o problema, se conseguir, dá um git add",
+    "*.ts": [
+        "eslint 'src/**' --fix",
+        "git add"
+    ]
+}
