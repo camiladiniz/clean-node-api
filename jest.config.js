@@ -1,15 +1,16 @@
 
 module.exports = {
+  // definir diretório raiz
   roots: ['<rootDir>/src'],
-  collectCoverage: true,
+  // collectCoverage: true,
   // An array of glob patterns indicating a set of files for which coverage information should be collected
   collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
   coverageDirectory: 'coverage',
-  coverageProvider: 'v8',
+  // coverageProvider: 'v8',
   testEnvironment: 'node',
 
   // A map from regular expressions to paths to transformers
-  transform: { // qualquer texto seguido de .ts 
+  transform: { // qualquer texto seguido de .ts
     '.+\\.ts$': 'ts-jest'
   }
 
@@ -30,4 +31,4 @@ module.exports = {
 
   // Whether to use watchman for file crawling
   // watchman: true,
-};
+}
