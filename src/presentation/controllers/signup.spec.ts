@@ -76,9 +76,7 @@ describe('SignUp Controller', () => {
     expect(httpResponse.statusCode).toBe(400) //tobe compara o ponteiro do objeto também (objs identicos)
     expect(httpResponse.body).toEqual(new MissingParamError('password'))
   })
-})
 
-describe('SignUp Controller', () => {
   test('Should return 400 if no password confirmation is provider', () => {
     // sut = system under text
     const { sut } = makeSut()
@@ -93,9 +91,7 @@ describe('SignUp Controller', () => {
     expect(httpResponse.statusCode).toBe(400) //tobe compara o ponteiro do objeto também (objs identicos)
     expect(httpResponse.body).toEqual(new MissingParamError('passwordConfirmation'))
   })
-})
 
-describe('SignUp Controller', () => {
   test('Should return 400 if an invalid email is provided', () => {
     // sut = system under text
     const { sut, emailValidatorStub } = makeSut()
@@ -113,5 +109,23 @@ describe('SignUp Controller', () => {
     const httpResponse = sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new InvalidParamError('email'))
+  })
+
+  test('Should call EmailValidator with correct email', () => {
+    // sut = system under text
+    const { sut, emailValidatorStub } = makeSut()
+    // utilizar o jest para espionar o método isValid da instancia
+    // mockando o retorno do método
+    const isValidSpy = jest.spyOn(emailValidatorStub, 'isValid')
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_email@mail.com',
+        password: 'any_password',
+        passwordConfirmation: 'any_password'
+      }
+    }
+    sut.handle(httpRequest)
+    expect(isValidSpy).toHaveBeenCalledWith('any_email@mail.com')
   })
 })
