@@ -1,15 +1,34 @@
 import { SignUpController } from './signup'
 import { MissingParamError } from '../errors/missing-param-error'
+import { InvalidParamError } from '../errors/invalid-param-error'
+import { EmailValidator } from '../protocols/email-validator'
 
-const makeSut = (): SignUpController => {
-  return new SignUpController()
+interface SutTypes {
+  sut: SignUpController
+  emailValidatorStub: EmailValidator
+}
+
+const makeSut = (): SutTypes => {
+  // injetando classe mockada de e-mail validator no controller
+  // sutb- test double (tipo de teste que criamos uma função e retornamos uma resposta fixa)
+  class EmailValidatorStub implements EmailValidator {
+    isValid (email: string): boolean {
+      return true
+    }
+  }
+  const emailValidatorStub = new EmailValidatorStub()
+  const sut = new SignUpController(emailValidatorStub)
+  return {
+    sut,
+    emailValidatorStub
+  }
 }
 
 describe('SignUp Controller', () => {
   // se não tiver a propriedade name no cadastro retorna erro
   test('Should return 400 if no name is provider', () => {
     // sut = system under text
-    const sut = makeSut()
+    const { sut } = makeSut()
     const httpRequest = {
       body: {
         email: 'any_email@mail.com',
@@ -27,7 +46,7 @@ describe('SignUp Controller', () => {
   // se não tiver a propriedade email no cadastro retorna erro
   test('Should return 400 if no email is provider', () => {
     // sut = system under text
-    const sut = makeSut()
+    const { sut } = makeSut()
     const httpRequest = {
       body: {
         name: 'any_name',
@@ -45,7 +64,7 @@ describe('SignUp Controller', () => {
   // se não tiver a propriedade name no cadastro retorna erro
   test('Should return 400 if no password is provider', () => {
     // sut = system under text
-    const sut = makeSut()
+    const { sut } = makeSut()
     const httpRequest = {
       body: {
         name: 'any_name',
@@ -62,7 +81,7 @@ describe('SignUp Controller', () => {
 describe('SignUp Controller', () => {
   test('Should return 400 if no password confirmation is provider', () => {
     // sut = system under text
-    const sut = makeSut()
+    const { sut } = makeSut()
     const httpRequest = {
       body: {
         name: 'any_name',
@@ -73,5 +92,26 @@ describe('SignUp Controller', () => {
     const httpResponse = sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400) //tobe compara o ponteiro do objeto também (objs identicos)
     expect(httpResponse.body).toEqual(new MissingParamError('passwordConfirmation'))
+  })
+})
+
+describe('SignUp Controller', () => {
+  test('Should return 400 if an invalid email is provided', () => {
+    // sut = system under text
+    const { sut, emailValidatorStub } = makeSut()
+    // utilizar o jest para espionar o método isValid da instancia
+    // mockando o retorno do método
+    jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false)
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'invalid_email@mail.com',
+        password: 'any_password',
+        passwordConfirmation: 'any_password'
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new InvalidParamError('email'))
   })
 })
