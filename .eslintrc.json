@@ -6,6 +6,8 @@
     "rules": {
       "t@typescript-eslint/strict-boolean-expressions": "off",
       "@typescript-eslint/consistent-type-definitions": "off",
-      "@typescript-eslint/method-signature-style": "off"
+      "@typescript-eslint/method-signature-style": "off",
+      "no-return-await": "off",
+      "@typescript-eslint/return-await": "error"
     }
 }
