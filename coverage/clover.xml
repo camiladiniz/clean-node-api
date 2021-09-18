@@ -1,8 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1631501204690" clover="3.2.0">
-  <project timestamp="1631501204691" name="All files">
-    <metrics statements="42" coveredstatements="36" conditionals="6" coveredconditionals="6" methods="8" coveredmethods="8" elements="56" coveredelements="50" complexity="0" loc="42" ncloc="42" packages="4" files="8" classes="8"/>
-    <package name="controllers.signup">
+<coverage generated="1632003603346" clover="3.2.0">
+  <project timestamp="1632003603347" name="All files">
+    <metrics statements="60" coveredstatements="50" conditionals="6" coveredconditionals="6" methods="13" coveredmethods="13" elements="79" coveredelements="69" complexity="0" loc="60" ncloc="60" packages="7" files="12" classes="12"/>
+    <package name="data.usecases.db-account">
+      <metrics statements="10" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+      <file name="db-add-account-protocols.ts" path="C:\Users\diniz\Desktop\node\clean-node-api\src\data\usecases\db-account\db-add-account-protocols.ts">
+        <metrics statements="4" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="2" count="0" type="stmt"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="4" count="0" type="stmt"/>
+      </file>
+      <file name="db-add-account.ts" path="C:\Users\diniz\Desktop\node\clean-node-api\src\data\usecases\db-account\db-add-account.ts">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="8" count="5" type="stmt"/>
+        <line num="9" count="5" type="stmt"/>
+        <line num="13" count="5" type="stmt"/>
+        <line num="15" count="4" type="stmt"/>
+        <line num="16" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="infra.criptography">
+      <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+      <file name="bcrypt-adapter.ts" path="C:\Users\diniz\Desktop\node\clean-node-api\src\infra\criptography\bcrypt-adapter.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="presentation.controllers.signup">
       <metrics statements="24" coveredstatements="20" conditionals="6" coveredconditionals="6" methods="2" coveredmethods="2"/>
       <file name="signup-protocols.ts" path="C:\Users\diniz\Desktop\node\clean-node-api\src\presentation\controllers\signup\signup-protocols.ts">
         <metrics statements="4" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -35,7 +65,7 @@
         <line num="40" count="2" type="stmt"/>
       </file>
     </package>
-    <package name="errors">
+    <package name="presentation.errors">
       <metrics statements="12" coveredstatements="12" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
       <file name="index.ts" path="C:\Users\diniz\Desktop\node\clean-node-api\src\presentation\errors\index.ts">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -62,7 +92,7 @@
         <line num="4" count="4" type="stmt"/>
       </file>
     </package>
-    <package name="helper">
+    <package name="presentation.helper">
       <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
       <file name="http-helper.ts" path="C:\Users\diniz\Desktop\node\clean-node-api\src\presentation\helper\http-helper.ts">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
@@ -72,12 +102,21 @@
         <line num="14" count="3" type="stmt"/>
       </file>
     </package>
-    <package name="protocols">
+    <package name="presentation.protocols">
       <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="C:\Users\diniz\Desktop\node\clean-node-api\src\presentation\protocols\index.ts">
         <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
         <line num="2" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="utils">
+      <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="email-validator-adapter.ts" path="C:\Users\diniz\Desktop\node\clean-node-api\src\utils\email-validator-adapter.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
       </file>
     </package>
   </project>

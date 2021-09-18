@@ -8,7 +8,7 @@ module.exports = {
   coverageDirectory: 'coverage',
   // coverageProvider: 'v8',
   testEnvironment: 'node',
-
+  preset: '@shelf/jest-mongodb',
   // A map from regular expressions to paths to transformers
   transform: { // qualquer texto seguido de .ts
     '.+\\.ts$': 'ts-jest'
