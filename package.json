@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test": "jest --passWithNoTests --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
@@ -37,7 +37,7 @@
   "dependencies": {
     "D": "^1.0.0",
     "bcrypt": "^5.0.1",
-    "mongodb": "^4.1.2",
+    "mongodb": "^4.1.1",
     "validator": "^13.6.0"
   }
 }
