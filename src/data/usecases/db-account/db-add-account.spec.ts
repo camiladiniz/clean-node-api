@@ -13,7 +13,6 @@ const makeEncrypter = (): Encrypter => {
 const makeAddAccountRepositoryStub = (): AddAccountRepository => {
   class AddAccountRepositoryStub implements AddAccountRepository {
     async add (accountData: AddAccountModel): Promise<AccountModel> {
-      
       return await new Promise(resolve => resolve(makeFakeAccount()))
     }
   }
