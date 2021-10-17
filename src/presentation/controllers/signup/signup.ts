@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { HttpRequest, HttpResponse, Controller, EmailValidator, AddAccount, Validation } from './signup-protocols'
 import { badRequest, serverError, ok } from '../../helper/http-helper'
-import { MissingParamError, InvalidParamError } from '../../errors'
+import { InvalidParamError } from '../../errors'
 
 export class SignUpController implements Controller {
   private readonly emailValidator: EmailValidator
@@ -21,10 +21,7 @@ export class SignUpController implements Controller {
         return badRequest(error)
       }
 
-      const { name, email, password, passwordConfirmation } = httpRequest.body
-      if (password !== passwordConfirmation) {
-        return badRequest(new InvalidParamError('passwordConfirmation'))
-      }
+      const { name, email, password } = httpRequest.body
 
       const isValid = this.emailValidator.isValid(email)
       if (!isValid) {
