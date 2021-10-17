@@ -14,6 +14,6 @@ export class ValidationComposite implements Validation {
         return error
       }
     }
-    return undefined
+    return null
   }
 }
