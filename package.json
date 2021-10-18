@@ -11,13 +11,17 @@
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
     "test:staged": "npm test -- --findRelatedTest",
     "test:ci": "npm test -- --coverage",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "lint:fix": "prettier-eslint '**/*.js' --write"
   },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
       "pre-push": "npm run test:ci"
     }
+  },
+  "lint-staged": {
+    "*.js": ["npm run lint:fix", "git add"]
   },
   "keywords": [],
   "author": "",
