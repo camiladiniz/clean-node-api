@@ -37,6 +37,7 @@ interface SutTypes {
 }
 
 const makeSut = (): SutTypes => {
+  console.log('testing')
   const authenticationStub = makeAuthentication()
   const validationStub = makeValidation()
   const sut = new LoginController(authenticationStub, validationStub)
