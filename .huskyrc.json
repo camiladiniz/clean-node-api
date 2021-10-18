@@ -1,7 +1,7 @@
 {
     "comment": "pre-commit: eslint",
     "hooks": {
-        "pre-commit": "./node_modules/.bin/lint-staged",
+        "pre-commit": "npm lint-staged",
         "pre-push": "npm run test:ci"
     }
 }
