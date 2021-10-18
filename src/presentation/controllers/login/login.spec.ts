@@ -16,6 +16,7 @@ const makeAuthentication = (): Authentication => {
 const makeValidation = (): Validation => {
   class ValidationStub implements Validation {
     validate (input: any): Error {
+      console.log('testing')
       return null as any
     }
   }
