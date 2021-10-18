@@ -30,6 +30,6 @@ export class DbAuthentication implements Authentication {
         return accessToken
       }
     }
-    return undefined
+    return null as any
   }
 }
