@@ -29,5 +29,10 @@ export const MongoHelper = {
     const { insertedId } = collection
     const { _id, ...items } = data
     return Object.assign({}, items, { id: insertedId })
+  },
+
+  mapGet: (data): any => {
+    const { _id, ...items } = data
+    return Object.assign({}, items, { id: _id })
   }
 }
