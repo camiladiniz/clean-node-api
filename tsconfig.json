@@ -1,11 +1,18 @@
 {
     "compilerOptions": {
-        "outDir": "./dist", // diz para o projeto onde queremos gerar os arquivos js que serão publicados,
+        "outDir": "dist", // diz para o projeto onde queremos gerar os arquivos js que serão publicados,
         "module": "commonjs", // podemos usar import export e quando gerar o pacote gerará de uma forma que o browser entende
         "target": "es2019",
         "esModuleInterop": true, //conversão de módulos que usam commonjs que é com import e export, se usarmos ele fará funcionar
         "allowJs": true, // se tivermos arquivos de configuração .js ao invés de json ele também será considerado no build para a pasta dist
         "strictNullChecks": true,
         "noImplicitReturns": false
-    }
+    },
+    // "include": [
+    //     "src"
+    // ],
+    // "exclude": [
+    //     "**/*.spec.ts",
+    //     "**/*.test.ts"
+    // ]
 }
