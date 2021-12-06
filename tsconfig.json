@@ -8,11 +8,11 @@
         "strictNullChecks": true,
         "noImplicitReturns": false
     },
-    // "include": [
-    //     "src"
-    // ],
-    // "exclude": [
-    //     "**/*.spec.ts",
-    //     "**/*.test.ts"
-    // ]
+    "include": [
+        "src"
+    ],
+    "exclude": [
+        "**/*.spec.ts",
+        "**/*.test.ts"
+    ]
 }
