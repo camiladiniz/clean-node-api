@@ -36,15 +36,13 @@ describe('Login Routes', () => {
   })
 
   describe('POST /login', () => {
-    // verifica se o body é parseado e o server entenda
     test('Should return 200 on login', async () => {
       const password = await (hash('123', 12))
-      const res = await accountCollection.insertOne({
+      await accountCollection.insertOne({
         name: 'Camila',
         email: 'camila@gmail.com',
         password: password
       })
-      console.log('res', res)
       await request(app)
         .post('/api/login')
         .send({
@@ -52,6 +50,16 @@ describe('Login Routes', () => {
           password: '123'
         })
         .expect(200)
+    })
+
+    test('Should return 401 on login', async () => {
+      await request(app)
+        .post('/api/login')
+        .send({
+          email: 'camila@gmail.com',
+          password: '123'
+        })
+        .expect(401)
     })
   })
 })
