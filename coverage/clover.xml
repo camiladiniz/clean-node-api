@@ -1,29 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1638736383411" clover="3.2.0">
-  <project timestamp="1638736383412" name="All files">
-    <metrics statements="11" coveredstatements="11" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2" elements="15" coveredelements="15" complexity="0" loc="11" ncloc="11" packages="2" files="2" classes="2"/>
-    <package name="errors">
-      <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="index.ts" path="C:\Users\diniz\Desktop\node\clean-node-api\src\presentation\errors\index.ts">
-        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="3" type="stmt"/>
-        <line num="2" count="3" type="stmt"/>
-        <line num="3" count="3" type="stmt"/>
-        <line num="4" count="3" type="stmt"/>
-      </file>
-    </package>
-    <package name="helper.validators">
-      <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
-      <file name="compare-fields-validation.ts" path="C:\Users\diniz\Desktop\node\clean-node-api\src\presentation\helper\validators\compare-fields-validation.ts">
-        <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
-        <line num="10" count="2" type="stmt"/>
-        <line num="14" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="17" count="1" type="stmt"/>
-      </file>
-    </package>
+<coverage generated="1638750442512" clover="3.2.0">
+  <project timestamp="1638750442512" name="All files">
+    <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0" elements="0" coveredelements="0" complexity="0" loc="0" ncloc="0" packages="0" files="0" classes="0"/>
   </project>
 </coverage>
