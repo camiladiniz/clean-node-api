@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import { HttpRequest, HttpResponse, Controller, AddAccount, Validation } from './signup-controller-protocols'
-import { badRequest, serverError, ok } from '../../helper/http/http-helper'
+import { HttpRequest, HttpResponse, Controller, AddAccount, Validation, Authentication } from './signup-controller-protocols'
+import { badRequest, serverError, ok, forbidden } from '../../helper/http/http-helper'
+import { EmailInUseError } from '../../errors'
 
 export class SignUpController implements Controller {
-  private readonly addAccount: AddAccount
-  private readonly validation: Validation
 
-  constructor (addAccount: AddAccount, validation: Validation) {
-    this.addAccount = addAccount
-    this.validation = validation
-  }
+  constructor (
+    private readonly addAccount: AddAccount,
+    private readonly validation: Validation,
+    private readonly authentication: Authentication
+  ) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
@@ -24,7 +24,14 @@ export class SignUpController implements Controller {
         email,
         password
       })
-      return ok(account)
+      if (!account) {
+        return forbidden(new EmailInUseError())
+      }
+      const accessToken = await this.authentication.auth({
+        email,
+        password
+      })
+      return ok({ accessToken })
     } catch (error) {
       return serverError(error)
     }
