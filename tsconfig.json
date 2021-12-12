@@ -7,7 +7,8 @@
         "sourceMap": true, // além dos arquivos normais no dist, cria o arquivo server.js.map com informações e o vs code consegue fazer o debug
         "allowJs": true, // se tivermos arquivos de configuração .js ao invés de json ele também será considerado no build para a pasta dist
         "strictNullChecks": true,
-        "noImplicitReturns": false
+        "noImplicitReturns": false,
+        "rootDir": "src"
     },
     "include": [
         "src"
