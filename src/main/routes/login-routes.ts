@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Router } from 'express'
 import { adaptRoute } from '../adapters/express-route-adapter'
-import { makeSignUpController } from '../factories/controllers/signup/signup-controller-factory'
-import { makeLoginController } from '../factories/controllers/login/login-controller-factory'
+import { makeSignUpController } from '../factories/controllers/login2/signup/signup-controller-factory'
+import { makeLoginController } from '../factories/controllers/login2/login/login-controller-factory'
 // para não precisar criar as rotas dos controllers manualmente
 
 // export default (router: Router): void => {
