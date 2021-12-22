@@ -17,53 +17,58 @@ const makeSut = (): BcryptAdapter => {
 }
 
 describe('Bcrypt Adapter', () => {
-  test('Should call hash with correct values', async () => {
-    const salt = 12
-    const sut = makeSut()
-    const hashSpy = jest.spyOn(bcrypt, 'hash')
-    await sut.hash('any_value')
-    expect(hashSpy).toHaveBeenCalledWith('any_value', salt)
+
+  describe('hash', () => {
+      test('Should call hash with correct values', async () => {
+        const salt = 12
+        const sut = makeSut()
+        const hashSpy = jest.spyOn(bcrypt, 'hash')
+        await sut.hash('any_value')
+        expect(hashSpy).toHaveBeenCalledWith('any_value', salt)
+      })
+    
+      test('Should return a valid hash on hash success', async () => {
+        const sut = makeSut()
+        const hash = await sut.hash('any_value')
+        expect(hash).toBe('hash')
+      })
+    
+      // this test don't work
+      // test('Should throw if bcrypt throws', async () => {
+      //   const sut = makeSut()
+      //   jest.spyOn(bcrypt, 'hash').mockReturnValueOnce(await new Promise((resolve, reject) => reject(new Error())))
+      //   const promise = await sut.hash('any_value')
+      //   await expect(promise).rejects.toThrow()
+      // })
   })
 
-  test('Should return a valid hash on hash success', async () => {
-    const sut = makeSut()
-    const hash = await sut.hash('any_value')
-    expect(hash).toBe('hash')
+  describe('compare', () => {
+    test('Should call compare with correct values', async () => {
+      const sut = makeSut()
+      const compareSpy = jest.spyOn(bcrypt, 'compare')
+      await sut.compare('any_value', 'any_hash')
+      expect(compareSpy).toHaveBeenCalledWith('any_value', 'any_hash')
+    })
+  
+    test('Should return true when compare succeeds', async () => {
+      const sut = makeSut()
+      const isValid = await sut.compare('any_value', 'any_hash')
+      expect(isValid).toBe(true)
+    })
+  
+    test('Should return false when compare fails', async () => {
+      const sut = makeSut()
+      jest.spyOn(bcrypt, 'compare').mockReturnValueOnce(await new Promise(resolve => resolve(false as any)))
+      const isValid = await sut.compare('any_value', 'any_hash')
+      expect(isValid).toBe(false)
+    })
+  
+    // this test don't work
+    // test('Should throw if compare throws', async () => {
+    //   const sut = makeSut()
+    //   jest.spyOn(bcrypt, 'compare').mockReturnValueOnce(await new Promise((resolve, reject) => reject(new Error())))
+    //   const promise = await sut.compare('any_value', 'any_hash')
+    //   await expect(promise).rejects.toThrow()
+    // })
   })
-
-  // this test don't work
-  // test('Should throw if bcrypt throws', async () => {
-  //   const sut = makeSut()
-  //   jest.spyOn(bcrypt, 'hash').mockReturnValueOnce(await new Promise((resolve, reject) => reject(new Error())))
-  //   const promise = await sut.hash('any_value')
-  //   await expect(promise).rejects.toThrow()
-  // })
-
-  test('Should call compare with correct values', async () => {
-    const sut = makeSut()
-    const compareSpy = jest.spyOn(bcrypt, 'compare')
-    await sut.compare('any_value', 'any_hash')
-    expect(compareSpy).toHaveBeenCalledWith('any_value', 'any_hash')
-  })
-
-  test('Should return true when compare succeeds', async () => {
-    const sut = makeSut()
-    const isValid = await sut.compare('any_value', 'any_hash')
-    expect(isValid).toBe(true)
-  })
-
-  test('Should return false when compare fails', async () => {
-    const sut = makeSut()
-    jest.spyOn(bcrypt, 'compare').mockReturnValueOnce(await new Promise(resolve => resolve(false as any)))
-    const isValid = await sut.compare('any_value', 'any_hash')
-    expect(isValid).toBe(false)
-  })
-
-  // this test don't work
-  // test('Should throw if compare throws', async () => {
-  //   const sut = makeSut()
-  //   jest.spyOn(bcrypt, 'compare').mockReturnValueOnce(await new Promise((resolve, reject) => reject(new Error())))
-  //   const promise = await sut.compare('any_value', 'any_hash')
-  //   await expect(promise).rejects.toThrow()
-  // })
 })
