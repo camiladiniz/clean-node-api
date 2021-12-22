@@ -6,7 +6,7 @@ import { hash } from 'bcrypt'
 
 let surveyCollection: Collection
 
-describe('Login Routes', () => {
+describe('Survey Routes', () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL as string)
   })
