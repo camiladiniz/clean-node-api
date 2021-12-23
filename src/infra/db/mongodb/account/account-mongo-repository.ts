@@ -33,9 +33,14 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
 
   async loadByToken (token: string, role?: string): Promise<AccountModel> {
     const accountCollection = MongoHelper.getCollection('accounts')
+    // se for admin e o token for válido vai acessar sempre, se não for admin o role tem que bater com o do parametro
     const account = await accountCollection.findOne({ 
       accessToken: token, 
-      role 
+      $or: [{
+        role
+      }, {
+        role: 'admin'
+      }] 
     })
     return account && MongoHelper.mapGet(account)
   }
