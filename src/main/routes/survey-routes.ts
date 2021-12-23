@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Router } from 'express'
+import { adaptMiddleware } from '../adapters/express-middleware-adapter'
 import { adaptRoute } from '../adapters/express-route-adapter'
 import { makeAddSurveyController } from '../factories/controllers/survey/add-survey/add-survey-controller-factory'
+import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware-factory'
 // para não precisar criar as rotas dos controllers manualmente
 
 // export default (router: Router): void => {
@@ -11,6 +13,7 @@ import { makeAddSurveyController } from '../factories/controllers/survey/add-sur
 // }
 
 export default (router: Router): void => {
+  const adminAuth = adaptMiddleware(makeAuthMiddleware('admin'))
   // vai adaptar o controller e vai retornar em um formato que express entende
-  router.post('/surveys', adaptRoute(makeAddSurveyController()))
+  router.post('/surveys', adminAuth, adaptRoute(makeAddSurveyController()))
 }
