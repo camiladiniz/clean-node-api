@@ -14,6 +14,8 @@ import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware-fac
 
 export default (router: Router): void => {
   const adminAuth = adaptMiddleware(makeAuthMiddleware('admin'))
+  const auth = adaptMiddleware(makeAuthMiddleware())
   // vai adaptar o controller e vai retornar em um formato que express entende
   router.post('/surveys', adminAuth, adaptRoute(makeAddSurveyController()))
+  router.get('/surveys', auth, adaptRoute(makeAddSurveyController()))
 }
