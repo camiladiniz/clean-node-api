@@ -1,6 +1,6 @@
-import { SurveyModel } from '../../../domain/models/survey'
-import { LoadSurveysRepository } from '../../protocols/db/survey/load-surveys-repository'
 import { DbLoadSurveys } from './db-load-surveys'
+import { SurveyModel, LoadSurveysRepository } from './db-load-surveys-protocols'
+import MockDate from 'mockdate'
 
 const makeFakeSurveys = (): SurveyModel[] => {
   return [{
@@ -48,6 +48,15 @@ const makeSut = (): SutTypes => {
 
 // testar a integração com o repoitório
 describe('DbLoadSurveys', () => {
+  beforeAll(() => {
+    // mockou a data, então sempre que chamar uma data ele vai pegar essa
+    MockDate.set(new Date())
+  })
+
+  afterAll(() => {
+    MockDate.reset()
+  })
+
   test('Should call LoadSurveysRepository', async () => {
     const { sut, loadSurveysRepositoryStub } = makeSut()
     const loadAllSpy = jest.spyOn(loadSurveysRepositoryStub, 'loadAll')
