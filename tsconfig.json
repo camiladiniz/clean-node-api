@@ -8,7 +8,11 @@
         "allowJs": true, // se tivermos arquivos de configuração .js ao invés de json ele também será considerado no build para a pasta dist
         "strictNullChecks": true,
         "noImplicitReturns": false,
-        "rootDir": "src"
+        "rootDir": "src",
+        "baseUrl": "src", // pq só usamos typescript dentro do src e o código fonte está aqui também
+        "paths": {
+            "@/*": ["*"] // sempre que quiser referenciar a raiz do projeto colocar um @
+        }
     },
     "include": [
         "src"
