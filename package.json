@@ -1,6 +1,6 @@
 {
   "name": "clean-node-api",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "dev": "sucrase-node src/main/server.ts",
     "localdebug": "sucrase-node src/main/server.ts",
     "test": "jest --passWithNoTests --runInBand --watch —no-cache",
-    "test:verbose": "jest --passWit3hNoTests --runInBand",
+    "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
     "test:staged": "npm test -- --findRelatedTests",
