@@ -8,11 +8,11 @@ export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
     //upsert diz que se não encontrar o objeto deve criá-lo com as informações do find e criation
     const res = await surveyResultCollection.findOneAndUpdate({
       surveyId: data.surveyId,
-      account: data.accountId
+      accountId: data.accountId
     }, {
       $set: {
         answer: data.answer,
-        date: data.date,
+        date: data.date
       }
     }, {
       upsert: true,
