@@ -5,7 +5,7 @@ import MockDate from 'mockdate'
 const makeFakeSurveys = (): SurveyModel[] => {
   return [{
     id: 'any_id',
-    question: 'any_quesiton',
+    question: 'any_question',
     answers: [{
       image: 'any_image',
       answer: 'any_answer'
@@ -13,7 +13,7 @@ const makeFakeSurveys = (): SurveyModel[] => {
     date: new Date()
   }, {
     id: 'other_id',
-    question: 'other_quesiton',
+    question: 'other_question',
     answers: [{
       image: 'other_image',
       answer: 'other_answer'

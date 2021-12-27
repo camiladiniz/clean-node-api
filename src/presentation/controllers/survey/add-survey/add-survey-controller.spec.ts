@@ -5,7 +5,7 @@ import MockDate from 'mockdate'
 
 const makeFakeRequest = (): HttpRequest => ({
   body: {
-    question: 'any_quesiton',
+    question: 'any_question',
     answers: [{
       image: 'any_image',
       answer: 'any_answer'

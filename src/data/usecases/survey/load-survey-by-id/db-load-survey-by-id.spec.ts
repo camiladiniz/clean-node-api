@@ -5,7 +5,7 @@ import MockDate from 'mockdate'
 const makeFakeSurvey = (): SurveyModel => {
   return {
     id: 'any_id',
-    question: 'any_quesiton',
+    question: 'any_question',
     answers: [{
       image: 'any_image',
       answer: 'any_answer'
