@@ -42,7 +42,7 @@ describe('Survey Result Routes', () => {
     await accountCollection.deleteMany({})
   })
 
-  describe('PUT /surveys/:surveyId/results', () => {
+  describe('PUT /api/surveys/:surveyId/results', () => {
     // verifica se o body é parseado e o server entenda
     test('Should return 403 on save survey without accessToken', async () => {
       await request(app)
@@ -66,7 +66,7 @@ describe('Survey Result Routes', () => {
         date: new Date()
       })
       await request(app)
-        .put(`/api/surveys/${res.insertedId}/results`)
+        .put(`/api/surveys/${res.insertedId.toString()}/results`)
         .set('x-access-token', accessToken)
         .send({
           answer: 'Answer 1'

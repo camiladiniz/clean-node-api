@@ -1,6 +1,7 @@
-import { ok, serverError } from '../../survey/load-surveys/load-surveys-controller-protocols'
+import { ok, serverError, forbidden } from '../../../../presentation/helper/http/http-helper'
+import { InvalidParamError } from '../../../../presentation/errors'
 import { SaveSurveyResultController } from './save-survey-result-controller'
-import { HttpRequest, LoadSurveyById, SurveyModel, InvalidParamError, forbidden, SaveSurveyResult, SaveSurveyResultModel, SurveyResultModel } from './save-survey-result-controller-protocols'
+import { HttpRequest, LoadSurveyById, SurveyModel, SaveSurveyResult, SaveSurveyResultModel, SurveyResultModel } from './save-survey-result-controller-protocols'
 import MockDate from 'mockdate'
 
 const makeFakeRequest = (): HttpRequest => ({
