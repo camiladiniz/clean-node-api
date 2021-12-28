@@ -6,7 +6,7 @@
   "scripts": {
     "start": "sucrase-node src/main/server.ts",
     "build": "rimraf dist && tsc -p tsconfig-build.json",
-    "debug": "nodemon -L --inspect=0.0.0.0:9222 --nolazy dist/main/server.js",
+    "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
     "dev": "sucrase-node src/main/server.ts",
     "localdebug": "sucrase-node src/main/server.ts",
     "test": "jest --passWithNoTests --runInBand --watch —no-cache",

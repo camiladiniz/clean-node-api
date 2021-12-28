@@ -37,7 +37,7 @@ export const MongoHelper = {
   },
 
   mapCollection: (data: any[], collection: any[]): any[] => {
-    return collection.map((c, i) => MongoHelper.map(data[i], c))
+    return collection.map(c => MongoHelper.mapGet(c))
   },
 
 }

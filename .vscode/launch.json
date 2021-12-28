@@ -11,6 +11,13 @@
       "program": "${workspaceFolder}/helloworld.ts",
       "preLaunchTask": "tsc: build - tsconfig.json",
       "outFiles": ["${workspaceFolder}/out/**/*.js"]
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "run Node",
+      "port": 9222,
+      "restart": true
     }
   ]
 }
