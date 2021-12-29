@@ -1,41 +1,34 @@
-import { loginPath, surveyPath } from './paths'
-import { badRequest, serverError, unauthorized, forbidden } from './components'
-import { accountSchema, errorSchema, loginParamsSchema, surveyAnswerSchema, surveySchema, surveysSchema, apiKeyAuthSchema } from './schemas'
+import paths from './paths'
+import components from './components'
+import schemas from './schemas'
 
 export default {
   openapi: '3.0.0',
   info: {
-    title: 'Clean Node API',
-    description: 'API para realizar enquetes entre programadores',
-    version: '1.0.0'
+    title: '4Dev - Enquetes para Programadores',
+    description: 'Essa é a documentação da API feita pelo instrutor Rodrigo Manguinho no curso da Udemy de NodeJs usando Typescript, TDD, Clean Architecture e seguindo os princípios do SOLID e Design Patterns.',
+    version: '1.0.0',
+    contact: {
+      name: 'Camila Diniz',
+      email: 'cadiniz.diniz@gmail.com'
+    }
+  },
+  externalDocs: {
+    description: 'Link para o treinamento completo',
+    url: 'https://www.udemy.com/course/tdd-com-mango/?referralCode=B53CE5CA2B9AFA5A6FA1'
   },
   servers: [{
-    url: '/api'
+    url: '/api',
+    description: 'Servidor Principal'
   }],
   tags: [{
-    name: 'Login'
+    name: 'Login',
+    description: 'APIs relacionadas a Login'
   }, {
-    name: 'Enquete'
+    name: 'Enquete',
+    description: 'APIs relacionadas a Enquete'
   }],
-  paths: {
-    '/login': loginPath,
-    '/surveys': surveyPath
-  },
-  schemas: {
-    account: accountSchema,
-    loginParams: loginParamsSchema,
-    error: errorSchema,
-    survey: surveySchema,
-    surveys: surveysSchema,
-    surveyAnswer: surveyAnswerSchema,
-  },
-  components: {
-    securitySchemes: {
-      apiKeyAuth: apiKeyAuthSchema
-    },
-    badRequest,
-    serverError,
-    unauthorized,
-    forbidden
-  }
+  paths,
+  schemas,
+  components
 }

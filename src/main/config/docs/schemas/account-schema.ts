@@ -1,8 +1,12 @@
 export const accountSchema = {
   type: 'object',
   properties: {
-    acessToken: {
+    accessToken: {
+      type: 'string'
+    },
+    name: {
       type: 'string'
     }
-  }
+  },
+  required: ['accessToken', 'name']
 }
