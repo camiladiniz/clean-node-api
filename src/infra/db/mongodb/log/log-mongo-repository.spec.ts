@@ -1,6 +1,6 @@
-import { Collection } from 'mongodb'
-import { MongoHelper } from '../helpers/mongo-helper'
 import { LogMongoRepository } from './log-mongo-repository'
+import { MongoHelper } from '../helpers/mongo-helper'
+import { Collection } from 'mongodb'
 
 const makeSut = (): LogMongoRepository => {
   return new LogMongoRepository()
@@ -18,7 +18,7 @@ describe('Log Mongo Repository', () => {
   })
 
   beforeEach(async () => {
-    errorCollection = MongoHelper.getCollection('errors')
+    errorCollection = await MongoHelper.getCollection('errors')
     await errorCollection.deleteMany({})
   })
 

@@ -1,9 +1,9 @@
+import app from '@/main/config/app'
+import env from '@/main/config/env'
+import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
+import { sign } from 'jsonwebtoken'
 import { Collection } from 'mongodb'
 import request from 'supertest'
-import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper'
-import app from '../config/app'
-import { sign } from 'jsonwebtoken'
-import env from '../config/env'
 
 let surveyCollection: Collection
 let accountCollection: Collection
@@ -15,7 +15,7 @@ const makeAccessToken = async (): Promise<string> => {
     password: '123',
     role: 'admin'
   })
-  const id = res.insertedId
+  const id = res.ops[0]._id
   const accessToken = sign({ id }, env.jwtSecret)
   await accountCollection.updateOne({
     _id: id
@@ -37,14 +37,13 @@ describe('Survey Routes', () => {
   })
 
   beforeEach(async () => {
-    surveyCollection = MongoHelper.getCollection('surveys')
+    surveyCollection = await MongoHelper.getCollection('surveys')
     await surveyCollection.deleteMany({})
-    accountCollection = MongoHelper.getCollection('accounts')
+    accountCollection = await MongoHelper.getCollection('accounts')
     await accountCollection.deleteMany({})
   })
 
   describe('POST /surveys', () => {
-    // verifica se o body é parseado e o server entenda
     test('Should return 403 on add survey without accessToken', async () => {
       await request(app)
         .post('/api/surveys')

@@ -1,6 +1,6 @@
-import { Collection } from 'mongodb'
-import { MongoHelper } from '../helpers/mongo-helper'
 import { SurveyMongoRepository } from './survey-mongo-repository'
+import { MongoHelper } from '../helpers/mongo-helper'
+import { Collection } from 'mongodb'
 
 let surveyCollection: Collection
 
@@ -8,7 +8,7 @@ const makeSut = (): SurveyMongoRepository => {
   return new SurveyMongoRepository()
 }
 
-describe('Account Mongo Repository', () => {
+describe('Survey Mongo Repository', () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL as string)
   })
@@ -18,7 +18,7 @@ describe('Account Mongo Repository', () => {
   })
 
   beforeEach(async () => {
-    surveyCollection = MongoHelper.getCollection('surveys')
+    surveyCollection = await MongoHelper.getCollection('surveys')
     await surveyCollection.deleteMany({})
   })
 
@@ -47,8 +47,6 @@ describe('Account Mongo Repository', () => {
         answers: [{
           image: 'any_image',
           answer: 'any_answer'
-        }, {
-          answer: 'other_answer'
         }],
         date: new Date()
       }, {
@@ -56,14 +54,13 @@ describe('Account Mongo Repository', () => {
         answers: [{
           image: 'other_image',
           answer: 'other_answer'
-        }, {
-          answer: 'other_answer'
         }],
         date: new Date()
       }])
       const sut = makeSut()
       const surveys = await sut.loadAll()
       expect(surveys.length).toBe(2)
+      expect(surveys[0].id).toBeTruthy()
       expect(surveys[0].question).toBe('any_question')
       expect(surveys[1].question).toBe('other_question')
     })
@@ -82,15 +79,13 @@ describe('Account Mongo Repository', () => {
         answers: [{
           image: 'any_image',
           answer: 'any_answer'
-        }, {
-          answer: 'other_answer'
         }],
         date: new Date()
       })
       const sut = makeSut()
-      const survey = await sut.loadById(res.insertedId as any)
-      expect(survey.id).toBeTruthy()
+      const survey = await sut.loadById(res.ops[0]._id)
       expect(survey).toBeTruthy()
+      expect(survey.id).toBeTruthy()
     })
   })
 })

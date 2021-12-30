@@ -1,7 +1,7 @@
-import { SaveSurveyResultRepository } from './db-save-survey-result-protocols'
 import { DbSaveSurveyResult } from './db-save-survey-result'
-import { mockSaveSurveyResultModel, mockSaveSurveyResultParams } from '@/domain/test'
+import { SaveSurveyResultRepository } from './db-save-survey-result-protocols'
 import { mockSaveSurveyResultRepository } from '@/data/test'
+import { throwError, mockSaveSurveyResultParams, mockSurveyResultModel } from '@/domain/test'
 import MockDate from 'mockdate'
 
 type SutTypes = {
@@ -11,16 +11,15 @@ type SutTypes = {
 
 const makeSut = (): SutTypes => {
   const saveSurveyResultRepositoryStub = mockSaveSurveyResultRepository()
-  const sut =  new DbSaveSurveyResult(saveSurveyResultRepositoryStub)
+  const sut = new DbSaveSurveyResult(saveSurveyResultRepositoryStub)
   return {
     sut,
     saveSurveyResultRepositoryStub
   }
 }
 
-describe('DbAddSurvey Usecase', () => {
+describe('DbSaveSurveyResult Usecase', () => {
   beforeAll(() => {
-    // mockou a data, então sempre que chamar uma data ele vai pegar essa
     MockDate.set(new Date())
   })
 
@@ -38,7 +37,7 @@ describe('DbAddSurvey Usecase', () => {
 
   test('Should throw if SaveSurveyResultRepository throws', async () => {
     const { sut, saveSurveyResultRepositoryStub } = makeSut()
-    jest.spyOn(saveSurveyResultRepositoryStub, 'save').mockImplementationOnce(() => { throw new Error() })
+    jest.spyOn(saveSurveyResultRepositoryStub, 'save').mockImplementationOnce(throwError)
     const promise = sut.save(mockSaveSurveyResultParams())
     await expect(promise).rejects.toThrow()
   })
@@ -46,6 +45,6 @@ describe('DbAddSurvey Usecase', () => {
   test('Should return SurveyResult on success', async () => {
     const { sut } = makeSut()
     const surveyResult = await sut.save(mockSaveSurveyResultParams())
-    expect(surveyResult).toEqual(mockSaveSurveyResultModel())
+    expect(surveyResult).toEqual(mockSurveyResultModel())
   })
 })

@@ -1,7 +1,7 @@
 import { DbLoadSurveys } from './db-load-surveys'
-import { SurveyModel, LoadSurveysRepository } from './db-load-surveys-protocols'
+import { LoadSurveysRepository } from './db-load-surveys-protocols'
 import { mockLoadSurveysRepository } from '@/data/test'
-import { mockSurveyModels } from '@/domain/test'
+import { throwError, mockSurveyModels } from '@/domain/test'
 import MockDate from 'mockdate'
 
 type SutTypes = {
@@ -18,10 +18,8 @@ const makeSut = (): SutTypes => {
   }
 }
 
-// testar a integração com o repoitório
 describe('DbLoadSurveys', () => {
   beforeAll(() => {
-    // mockou a data, então sempre que chamar uma data ele vai pegar essa
     MockDate.set(new Date())
   })
 
@@ -44,7 +42,7 @@ describe('DbLoadSurveys', () => {
 
   test('Should throw if LoadSurveysRepository throws', async () => {
     const { sut, loadSurveysRepositoryStub } = makeSut()
-    jest.spyOn(loadSurveysRepositoryStub, 'loadAll').mockImplementationOnce(() => { throw new Error() })
+    jest.spyOn(loadSurveysRepositoryStub, 'loadAll').mockImplementationOnce(throwError)
     const promise = sut.load()
     await expect(promise).rejects.toThrow()
   })

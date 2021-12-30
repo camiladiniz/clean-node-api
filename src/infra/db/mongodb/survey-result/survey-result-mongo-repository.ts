@@ -1,13 +1,14 @@
-import { SaveSurveyResultParams, SaveSurveyResultRepository } from '@/data/usecases/survey-result/save-survey-result/db-save-survey-result-protocols'
-import { MongoHelper } from '../../helpers/mongo-helper'
+import { SaveSurveyResultRepository } from '@/data/protocols/db/survey-result/save-survey-result-repository'
+import { MongoHelper } from '../helpers/mongo-helper'
 import { SurveyResultModel } from '@/domain/models/survey-result'
+import { SaveSurveyResultParams } from '@/domain/usecases/survey-result/save-survey-result'
 import { ObjectId } from 'mongodb'
 
 export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
   async save (data: SaveSurveyResultParams): Promise<SurveyResultModel> {
-    const surveyResultCollection = await MongoHelper.getCollection('surveyResult')
+    const surveyResultCollection = await MongoHelper.getCollection('surveyResults')
     //upsert diz que se não encontrar o objeto deve criá-lo com as informações do find e criation
-    const res = await surveyResultCollection.findOneAndUpdate({
+    await surveyResultCollection.findOneAndUpdate({
       surveyId: new ObjectId(data.surveyId),
       accountId: new ObjectId(data.accountId)
     }, {
@@ -19,6 +20,7 @@ export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
       upsert: true
     })
     const surveyResult = await this.loadBySurveyId(data.surveyId)
+    console.log(surveyResult)
     return surveyResult
   }
 
@@ -108,6 +110,6 @@ export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
       }
     }])
     const surveyResult = await query.toArray()
-    return surveyResult?.length ? surveyResult[0] : null as any
+    return surveyResult?.length ? surveyResult[0] : null
   }
 }

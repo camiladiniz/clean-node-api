@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import { HttpRequest, HttpResponse, Controller, AddAccount, Validation, Authentication } from './signup-controller-protocols'
-import { badRequest, serverError, ok, forbidden } from '../../../helper/http/http-helper'
-import { EmailInUseError } from '../../../errors'
+import { HttpResponse, HttpRequest, Controller, AddAccount, Authentication } from './signup-controller-protocols'
+import { badRequest, serverError, ok, forbidden } from '@/presentation/helpers/http/http-helper'
+import { Validation } from '@/presentation/protocols/validation'
+import { EmailInUseError } from '@/presentation/errors'
 
 export class SignUpController implements Controller {
-
   constructor (
     private readonly addAccount: AddAccount,
     private readonly validation: Validation,
@@ -17,7 +16,6 @@ export class SignUpController implements Controller {
       if (error) {
         return badRequest(error)
       }
-
       const { name, email, password } = httpRequest.body
       const account = await this.addAccount.add({
         name,

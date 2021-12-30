@@ -1,5 +1,3 @@
-export * from '../../../protocols'
+export * from '@/presentation/protocols'
 export * from '@/domain/usecases/survey/load-surveys'
-export * from '../../../../domain/models/survey'
-export * from '../../../helper/http/http-helper'
-
+export * from '@/domain/models/survey'

@@ -1,8 +1,6 @@
-import { Controller, HttpRequest } from '../../presentation/protocols'
+import { Controller, HttpRequest } from '@/presentation/protocols'
 import { Request, Response } from 'express'
 
-// adapta o controlador para que ele consiga se comunicar com o express de forma correta
-// então, agora o express está desacoplano do controller
 export const adaptRoute = (controller: Controller) => {
   return async (req: Request, res: Response) => {
     const httpRequest: HttpRequest = {

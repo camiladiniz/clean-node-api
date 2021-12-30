@@ -1,8 +1,9 @@
 import { LoginController } from './login-controller'
-import { badRequest, serverError, unauthorized, ok } from '@/presentation/helper/http/http-helper'
-import { MissingParamError } from '../../../errors'
 import { HttpRequest, Authentication, Validation } from './login-controller-protocols'
+import { badRequest, serverError, unauthorized, ok } from '@/presentation/helpers/http/http-helper'
+import { MissingParamError } from '@/presentation/errors'
 import { mockAuthentication, mockValidation } from '@/presentation/test'
+import { throwError } from '@/domain/test'
 
 const mockRequest = (): HttpRequest => ({
   body: {
@@ -29,27 +30,6 @@ const makeSut = (): SutTypes => {
 }
 
 describe('Login Controller', () => {
-  // test('Should return 400 if no email is provided', async () => {
-  //   const { sut } = makeSut()
-  //   const httpRequest = {
-  //     body: {
-  //       password: 'any_password'
-  //     }
-  //   }
-  //   const httpResponse = await sut.handle(httpRequest)
-  //   expect(httpResponse).toEqual(badRequest(new MissingParamError('email')))
-  // })
-
-  // test('Should return 400 if no password is provided', async () => {
-  //   const { sut } = makeSut()
-  //   const httpRequest = {
-  //     body: {
-  //       email: 'any_email@mail.com'
-  //     }
-  //   }
-  //   const httpResponse = await sut.handle(httpRequest)
-  //   expect(httpResponse).toEqual(badRequest(new MissingParamError('password')))
-  // })
   test('Should call Authentication with correct values', async () => {
     const { sut, authenticationStub } = makeSut()
     const authSpy = jest.spyOn(authenticationStub, 'auth')
@@ -69,7 +49,7 @@ describe('Login Controller', () => {
 
   test('Should return 500 if Authentication throws', async () => {
     const { sut, authenticationStub } = makeSut()
-    jest.spyOn(authenticationStub, 'auth').mockImplementationOnce(() => { throw new Error() })
+    jest.spyOn(authenticationStub, 'auth').mockImplementationOnce(throwError)
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
   })

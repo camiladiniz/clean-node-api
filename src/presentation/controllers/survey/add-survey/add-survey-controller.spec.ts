@@ -1,7 +1,8 @@
 import { HttpRequest, Validation, AddSurvey } from './add-survey-controller-protocols'
 import { AddSurveyController } from './add-survey-controller'
+import { badRequest, serverError, noContent } from '@/presentation/helpers/http/http-helper'
 import { mockValidation, mockAddSurvey } from '@/presentation/test'
-import { badRequest, noContent, serverError } from '../../../helper/http/http-helper'
+import { throwError } from '@/domain/test'
 import MockDate from 'mockdate'
 
 const makeFakeRequest = (): HttpRequest => ({
@@ -34,7 +35,6 @@ const makeSut = (): SutTypes => {
 
 describe('AddSurvey Controller', () => {
   beforeAll(() => {
-    // mockou a data, então sempre que chamar uma data ele vai pegar essa
     MockDate.set(new Date())
   })
 
@@ -52,7 +52,7 @@ describe('AddSurvey Controller', () => {
 
   test('Should return 400 if Validation fails', async () => {
     const { sut, validationStub } = makeSut()
-    const validateSpy = jest.spyOn(validationStub, 'validate').mockReturnValueOnce(new Error())
+    jest.spyOn(validationStub, 'validate').mockReturnValueOnce(new Error())
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(badRequest(new Error()))
   })
@@ -67,7 +67,7 @@ describe('AddSurvey Controller', () => {
 
   test('Should return 500 if AddSurvey throws', async () => {
     const { sut, addSurveyStub } = makeSut()
-    jest.spyOn(addSurveyStub, 'add').mockImplementationOnce(() => { throw new Error() })
+    jest.spyOn(addSurveyStub, 'add').mockImplementationOnce(throwError)
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
   })

@@ -10,7 +10,7 @@ export const mockAddAccountParams = (): AddAccountParams => ({
 
 export const mockAccountModel = (): AccountModel => Object.assign({}, mockAddAccountParams(), { id: 'any_id' })
 
-export const mockFakeAuthentication = (): AuthenticationParams => ({
+export const mockAuthentication = (): AuthenticationParams => ({
   email: 'any_email@mail.com',
   password: 'any_password'
 })

@@ -1,4 +1,4 @@
-import { HttpRequest, Middleware } from '../../presentation/protocols'
+import { HttpRequest, Middleware } from '@/presentation/protocols'
 import { Request, Response, NextFunction } from 'express'
 
 // adapta o middleware para que ele consiga se comunicar com o express de forma correta
