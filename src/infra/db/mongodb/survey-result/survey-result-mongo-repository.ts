@@ -1,10 +1,11 @@
-import { SaveSurveyResultRepository } from '@/data/protocols/db/survey-result/save-survey-result-repository'
 import { MongoHelper, QueryBuilder } from '../helpers'
-import { SurveyResultModel } from '@/domain/models/survey-result'
+import { SaveSurveyResultRepository } from '@/data/protocols/db/survey-result/save-survey-result-repository'
+import { LoadSurveyResultRepository } from '@/data/protocols/db/survey-result/load-survey-result-repository'
 import { SaveSurveyResultParams } from '@/domain/usecases/survey-result/save-survey-result'
+import { SurveyResultModel } from '@/domain/models/survey-result'
 import { ObjectId } from 'mongodb'
 
-export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
+export class SurveyResultMongoRepository implements SaveSurveyResultRepository, LoadSurveyResultRepository {
   async save (data: SaveSurveyResultParams): Promise<SurveyResultModel> {
     const surveyResultCollection = await MongoHelper.getCollection('surveyResults')
     //upsert diz que se não encontrar o objeto deve criá-lo com as informações do find e criation
@@ -24,7 +25,7 @@ export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
     return surveyResult
   }
 
-  private async loadBySurveyId (surveyId: string): Promise<SurveyResultModel> {
+  async loadBySurveyId (surveyId: string): Promise<SurveyResultModel> {
     const surveyResultCollection = await MongoHelper.getCollection('surveyResults')
     const query = new QueryBuilder()
       .match({
