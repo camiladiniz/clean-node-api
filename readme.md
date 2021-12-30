@@ -8,8 +8,6 @@
 # **Clean Node API**
 Essa API faz parte do treinamento do professor Rodrigo Manguinho (Mango) na Udemy.
 
-<br /><br />
-
 > ## APIs construídas no treinamento
 
 1. [Cadastro](./requirements/signup.md)

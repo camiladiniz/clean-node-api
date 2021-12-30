@@ -31,7 +31,7 @@ describe('DbAddSurvey Usecase', () => {
   test('Should call SaveSurveyResultRepository with correct values', async () => {
     const { sut, saveSurveyResultRepositoryStub } = makeSut()
     const saveSpy = jest.spyOn(saveSurveyResultRepositoryStub, 'save')
-    const surveyResultData = mockSaveSurveyResultModel()
+    const surveyResultData = mockSaveSurveyResultParams()
     await sut.save(surveyResultData)
     expect(saveSpy).toHaveBeenCalledWith(surveyResultData)
   })
