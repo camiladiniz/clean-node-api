@@ -1,5 +1,5 @@
 import { InvalidParamError } from '@/presentation/errors'
-import { forbidden } from '@/presentation/helpers/http/http-helper'
+import { forbidden, serverError } from '@/presentation/helpers/http/http-helper'
 import { Controller, HttpRequest, HttpResponse, LoadSurveyById } from './load-survey-result-controller-protocols'
 
 export class LoadSurveyResultController implements Controller {
@@ -13,9 +13,9 @@ export class LoadSurveyResultController implements Controller {
       if (!survey) {
         return forbidden(new InvalidParamError('surveyId'))
       }
-      return Promise.resolve(null as any)
+      return null as any
     } catch (error) {
-      return Promise.resolve(null as any)
+      return serverError(error)
     }
   }
 }
