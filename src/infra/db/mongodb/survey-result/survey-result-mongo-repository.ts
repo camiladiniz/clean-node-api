@@ -6,7 +6,7 @@ import { SurveyResultModel } from '@/domain/models/survey-result'
 import { ObjectId } from 'mongodb'
 
 export class SurveyResultMongoRepository implements SaveSurveyResultRepository, LoadSurveyResultRepository {
-  async save (data: SaveSurveyResultParams): Promise<SurveyResultModel> {
+  async save (data: SaveSurveyResultParams): Promise<void> {
     const surveyResultCollection = await MongoHelper.getCollection('surveyResults')
     //upsert diz que se não encontrar o objeto deve criá-lo com as informações do find e criation
     await surveyResultCollection.findOneAndUpdate({
@@ -20,9 +20,7 @@ export class SurveyResultMongoRepository implements SaveSurveyResultRepository, 
     }, {
       upsert: true
     })
-    const surveyResult = await this.loadBySurveyId(data.surveyId)
-    console.log(surveyResult)
-    return surveyResult
+    await this.loadBySurveyId(data.surveyId)
   }
 
   async loadBySurveyId (surveyId: string): Promise<SurveyResultModel> {
