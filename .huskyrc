@@ -1,7 +1,0 @@
-{
-    "comment": "pre-commit: eslint",
-    "hooks": {
-        "pre-commit": "npm lint-staged",
-        "pre-push": "npm run test:ci"
-    }
-}
