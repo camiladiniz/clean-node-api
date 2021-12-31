@@ -10,8 +10,8 @@ let accountCollection: Collection
 
 const makeAccessToken = async (): Promise<string> => {
   const res = await accountCollection.insertOne({
-    name: 'Camila',
-    email: 'camila@gmail.com',
+    name: 'Rodrigo',
+    email: 'rodrigo.manguinho@gmail.com',
     password: '123'
   })
   const id = res.ops[0]._id
@@ -43,7 +43,6 @@ describe('Survey Routes', () => {
   })
 
   describe('PUT /surveys/:surveyId/results', () => {
-    // verifica se o body é parseado e o server entenda
     test('Should return 403 on save survey result without accessToken', async () => {
       await request(app)
         .put('/api/surveys/any_id/results')
@@ -76,8 +75,7 @@ describe('Survey Routes', () => {
   })
 
   describe('GET /surveys/:surveyId/results', () => {
-    // verifica se o body é parseado e o server entenda
-    test('Should return 403 on save survey result without accessToken', async () => {
+    test('Should return 403 on load survey result without accessToken', async () => {
       await request(app)
         .get('/api/surveys/any_id/results')
         .expect(403)
@@ -98,9 +96,6 @@ describe('Survey Routes', () => {
       await request(app)
         .get(`/api/surveys/${res.ops[0]._id}/results`)
         .set('x-access-token', accessToken)
-        .send({
-          answer: 'Answer 1'
-        })
         .expect(200)
     })
   })

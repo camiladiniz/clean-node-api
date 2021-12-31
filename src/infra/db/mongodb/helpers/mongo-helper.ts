@@ -6,12 +6,10 @@ export const MongoHelper = {
 
   async connect (uri: string): Promise<void> {
     this.uri = uri
-    this.client = await MongoClient.connect(uri, 
-    //   {
-    //   useNewUrlParser: true,
-    //   useUnifiedTopology: true
-    // }
-    )
+    this.client = await MongoClient.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    })
   },
 
   async disconnect (): Promise<void> {
@@ -27,9 +25,13 @@ export const MongoHelper = {
   },
 
   map: (data: any): any => {
-    const { _id, ...collectionWithoutId } = data
-    return Object.assign({}, collectionWithoutId, { id: _id })
+    const { _id, ...rest } = data
+    return Object.assign({}, rest, { id: _id })
   },
+  // map: (data: any): any => {
+  //   const { _id, ...collectionWithoutId } = data
+  //   return Object.assign({}, collectionWithoutId, { id: _id })
+  // },
 
   mapCollection: (collection: any[]): any[] => {
     return collection.map(c => MongoHelper.map(c))

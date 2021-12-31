@@ -10,8 +10,8 @@ export class DbAddAccount implements AddAccount {
   async add (accountData: AddAccountParams): Promise<AccountModel> {
     const account = await this.loadAccountByEmailRepository.loadByEmail(accountData.email)
     if (!account) {
-      // colocar {} na frente garante que um novo objeto será criado, ou seja, o valor de password não será alterado no accountData
       const hashedPassword = await this.hasher.hash(accountData.password)
+      // colocar {} na frente garante que um novo objeto será criado, ou seja, o valor de password não será alterado no accountData
       const newAccount = await this.addAccountRepository.add(Object.assign({}, accountData, { password: hashedPassword }))
       return newAccount
     }

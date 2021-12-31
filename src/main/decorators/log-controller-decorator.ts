@@ -2,7 +2,6 @@ import { Controller, HttpRequest, HttpResponse } from '@/presentation/protocols'
 import { LogErrorRepository } from '@/data/protocols/db/log/log-error-repository'
 
 export class LogControllerDecorator implements Controller {
-  
   // o decorator deve ter a mesma assinatura que a classe que será decorada (signup controller)
   // no construtor vai a classe que queremos decorar (a classe que será decorada será o mesmo tipo que a classe implementa, poderia sre herança)
   constructor (

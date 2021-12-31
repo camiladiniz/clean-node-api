@@ -1,4 +1,4 @@
-import app from '../config/app'
+import app from '@/main/config/app'
 import { noCache } from './no-cache'
 import request from 'supertest'
 
