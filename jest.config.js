@@ -1,5 +1,4 @@
 module.exports = {
-  // definir diretório raiz
   roots: ['<rootDir>/tests'],
   collectCoverageFrom: [
     '<rootDir>/src/**/*.ts',
@@ -9,11 +8,11 @@ module.exports = {
   coverageProvider: 'babel',
   testEnvironment: 'node',
   preset: '@shelf/jest-mongodb',
-  transform: { // qualquer texto seguido de .ts
+  transform: {
     '.+\\.ts$': 'ts-jest'
   },
   moduleNameMapper: {
     '@/tests/(.*)': '<rootDir>/tests/$1',
-    '@/(.*)': '<rootDir>/src/$1' // sempre que encontrar isso concatena com o diretório raiz
+    '@/(.*)': '<rootDir>/src/$1'
   }
 }

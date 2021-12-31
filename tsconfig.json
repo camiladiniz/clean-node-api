@@ -1,24 +1,17 @@
 {
-    "compilerOptions": {
-        "outDir": "dist", // diz para o projeto onde queremos gerar os arquivos js que serão publicados,
-        "module": "commonjs", // podemos usar import export e quando gerar o pacote gerará de uma forma que o browser entende
-        "target": "es2019",
-        "esModuleInterop": true, //conversão de módulos que usam commonjs que é com import e export, se usarmos ele fará funcionar
-        // "sourceMap": true, // além dos arquivos normais no dist, cria o arquivo server.js.map com informações e o vs code consegue fazer o debug
-        "allowJs": true, // se tivermos arquivos de configuração .js ao invés de json ele também será considerado no build para a pasta dist
-        "strictNullChecks": true,
-        "noImplicitReturns": false,
-        "rootDir": "src",
-        "baseUrl": "src", // pq só usamos typescript dentro do src e o código fonte está aqui também
-        "paths": {
-            "@/*": ["*"] // sempre que quiser referenciar a raiz do projeto colocar um @
-        }
-    },
-    "include": [
-        "src"
-    ],
-    "exclude": [
-        "**/*.spec.ts",
-        "**/*.test.ts"
-    ]
+  "compilerOptions": {
+    "outDir": "dist", // diz para o projeto onde queremos gerar os arquivos js que serão publicados,
+    "module": "commonjs", // podemos usar import export e quando gerar o pacote gerará de uma forma que o browser entende
+    "target": "es2019",
+    "esModuleInterop": true, //conversão de módulos que usam commonjs que é com import e export, se usarmos ele fará funcionar
+    "sourceMap": true, // além dos arquivos normais no dist, cria o arquivo server.js.map com informações e o vs code consegue fazer o debug
+    "rootDirs": ["src", "tests"],
+    "baseUrl": "src", // pq só usamos typescript dentro do src e o código fonte está aqui também
+    "paths": {
+      "@/tests/*": ["../tests/*"],
+      "@/*": ["*"] // sempre que quiser referenciar a raiz do projeto colocar um @
+    }
+  },
+  "include": ["src", "tests"],
+  "exclude": []
 }
