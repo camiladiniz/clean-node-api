@@ -1,9 +1,9 @@
-import env from '@/main/config/env'
 import { MongoHelper } from '@/infra/db'
+import env from '@/main/config/env'
 import { setupApp } from '@/main/config/app'
 
-import { sign } from 'jsonwebtoken'
 import { Collection } from 'mongodb'
+import { sign } from 'jsonwebtoken'
 import { Express } from 'express'
 import request from 'supertest'
 
@@ -15,7 +15,8 @@ const mockAccessToken = async (): Promise<string> => {
   const res = await accountCollection.insertOne({
     name: 'Camila',
     email: 'camila@mail.com',
-    password: '123'
+    password: '123',
+    role: 'admin'
   })
   const id = res.insertedId.toHexString()
   const accessToken = sign({ id }, env.jwtSecret)
@@ -29,7 +30,7 @@ const mockAccessToken = async (): Promise<string> => {
   return accessToken
 }
 
-describe('Survey Routes', () => {
+describe('Survey GraphQL', () => {
   beforeAll(async () => {
     app = await setupApp()
     await MongoHelper.connect(process.env.MONGO_URL)
@@ -46,19 +47,54 @@ describe('Survey Routes', () => {
     await accountCollection.deleteMany({})
   })
 
-  describe('PUT /surveys/:surveyId/results', () => {
-    test('Should return 403 on save survey result without accessToken', async () => {
-      await request(app)
-        .put('/api/surveys/any_id/results')
-        .send({
-          answer: 'any_answer'
-        })
-        .expect(403)
+  describe('Surveys Query', () => {
+    const query = `query {
+      surveys {
+        id
+        question
+        answers {
+          image
+          answer
+        }
+        date
+        didAnswer
+      }
+    }`
+
+    test('Should return Surveys', async () => {
+      const accessToken = await mockAccessToken()
+      const now = new Date()
+      await surveyCollection.insertOne({
+        question: 'Question',
+        answers: [{
+          answer: 'Answer 1',
+          image: 'http://image-name.com'
+        }, {
+          answer: 'Answer 2'
+        }],
+        date: now
+      })
+      const res = await request(app)
+        .post('/graphql')
+        .set('x-access-token', accessToken)
+        .send({ query })
+      expect(res.status).toBe(200)
+      expect(res.body.data.surveys.length).toBe(1)
+      expect(res.body.data.surveys[0].id).toBeTruthy()
+      expect(res.body.data.surveys[0].question).toBe('Question')
+      expect(res.body.data.surveys[0].date).toBe(now.toISOString())
+      expect(res.body.data.surveys[0].didAnswer).toBe(false)
+      expect(res.body.data.surveys[0].answers).toEqual([{
+        answer: 'Answer 1',
+        image: 'http://image-name.com'
+      }, {
+        answer: 'Answer 2',
+        image: null
+      }])
     })
 
-    test('Should return 200 on save survey result with accessToken', async () => {
-      const accessToken = await mockAccessToken()
-      const res = await surveyCollection.insertOne({
+    test('Should return AccessDeniedError if no token is provided', async () => {
+      await surveyCollection.insertOne({
         question: 'Question',
         answers: [{
           answer: 'Answer 1',
@@ -68,39 +104,12 @@ describe('Survey Routes', () => {
         }],
         date: new Date()
       })
-      await request(app)
-        .put(`/api/surveys/${res.insertedId.toHexString()}/results`)
-        .set('x-access-token', accessToken)
-        .send({
-          answer: 'Answer 1'
-        })
-        .expect(200)
-    })
-  })
-
-  describe('GET /surveys/:surveyId/results', () => {
-    test('Should return 403 on load survey result without accessToken', async () => {
-      await request(app)
-        .get('/api/surveys/any_id/results')
-        .expect(403)
-    })
-
-    test('Should return 200 on load survey result with accessToken', async () => {
-      const accessToken = await mockAccessToken()
-      const res = await surveyCollection.insertOne({
-        question: 'Question',
-        answers: [{
-          answer: 'Answer 1',
-          image: 'http://image-name.com'
-        }, {
-          answer: 'Answer 2'
-        }],
-        date: new Date()
-      })
-      await request(app)
-        .get(`/api/surveys/${res.insertedId.toHexString()}/results`)
-        .set('x-access-token', accessToken)
-        .expect(200)
+      const res = await request(app)
+        .post('/graphql')
+        .send({ query })
+      expect(res.status).toBe(403)
+      expect(res.body.data).toBeFalsy()
+      expect(res.body.errors[0].message).toBe('Access denied')
     })
   })
 })

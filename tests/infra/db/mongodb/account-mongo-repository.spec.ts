@@ -4,6 +4,10 @@ import { mockAddAccountParams } from '@/tests/domain/mocks'
 import { Collection } from 'mongodb'
 import faker from 'faker'
 
+const makeSut = (): AccountMongoRepository => {
+  return new AccountMongoRepository()
+}
+
 let accountCollection: Collection
 
 describe('AccountMongoRepository', () => {
@@ -16,13 +20,9 @@ describe('AccountMongoRepository', () => {
   })
 
   beforeEach(async () => {
-    accountCollection = await MongoHelper.getCollection('accounts')
+    accountCollection = MongoHelper.getCollection('accounts')
     await accountCollection.deleteMany({})
   })
-
-  const makeSut = (): AccountMongoRepository => {
-    return new AccountMongoRepository()
-  }
 
   describe('add()', () => {
     test('Should return an account on success', async () => {
@@ -72,10 +72,10 @@ describe('AccountMongoRepository', () => {
     test('Should update the account accessToken on success', async () => {
       const sut = makeSut()
       const res = await accountCollection.insertOne(mockAddAccountParams())
-      const fakeAccount = res.ops[0]
+      const fakeAccount = await accountCollection.findOne({ _id: res.insertedId })
       expect(fakeAccount.accessToken).toBeFalsy()
-      const accessToken = faker.random.uuid()
-      await sut.updateAccessToken(fakeAccount._id, accessToken)
+      const accessToken = faker.datatype.uuid()
+      await sut.updateAccessToken(res.insertedId.toString(), accessToken)
       const account = await accountCollection.findOne({ _id: fakeAccount._id })
       expect(account).toBeTruthy()
       expect(account.accessToken).toBe(accessToken)
@@ -86,13 +86,13 @@ describe('AccountMongoRepository', () => {
     let name = faker.name.findName()
     let email = faker.internet.email()
     let password = faker.internet.password()
-    let accessToken = faker.random.uuid()
+    let accessToken = faker.datatype.uuid()
 
     beforeEach(() => {
       name = faker.name.findName()
       email = faker.internet.email()
       password = faker.internet.password()
-      accessToken = faker.random.uuid()
+      accessToken = faker.datatype.uuid()
     })
 
     test('Should return an account on loadByToken without role', async () => {

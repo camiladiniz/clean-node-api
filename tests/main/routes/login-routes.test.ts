@@ -1,13 +1,17 @@
-import app from '@/main/config/app'
-import { MongoHelper } from '@/infra/db/mongodb/mongo-helper'
+import { MongoHelper } from '@/infra/db'
+import { setupApp } from '@/main/config/app'
+
 import { Collection } from 'mongodb'
 import { hash } from 'bcrypt'
+import { Express } from 'express'
 import request from 'supertest'
 
 let accountCollection: Collection
+let app: Express
 
 describe('Login Routes', () => {
   beforeAll(async () => {
+    app = await setupApp()
     await MongoHelper.connect(process.env.MONGO_URL)
   })
 
@@ -16,7 +20,7 @@ describe('Login Routes', () => {
   })
 
   beforeEach(async () => {
-    accountCollection = await MongoHelper.getCollection('accounts')
+    accountCollection = MongoHelper.getCollection('accounts')
     await accountCollection.deleteMany({})
   })
 
@@ -25,8 +29,8 @@ describe('Login Routes', () => {
       await request(app)
         .post('/api/signup')
         .send({
-          name: 'Rodrigo',
-          email: 'rodrigo.manguinho@gmail.com',
+          name: 'Camila',
+          email: 'camila@mail.com',
           password: '123',
           passwordConfirmation: '123'
         })
@@ -34,8 +38,8 @@ describe('Login Routes', () => {
       await request(app)
         .post('/api/signup')
         .send({
-          name: 'Rodrigo',
-          email: 'rodrigo.manguinho@gmail.com',
+          name: 'Camila',
+          email: 'camila@mail.com',
           password: '123',
           passwordConfirmation: '123'
         })
@@ -47,14 +51,14 @@ describe('Login Routes', () => {
     test('Should return 200 on login', async () => {
       const password = await hash('123', 12)
       await accountCollection.insertOne({
-        name: 'Rodrigo',
-        email: 'rodrigo.manguinho@gmail.com',
+        name: 'Camila',
+        email: 'camila@mail.com',
         password
       })
       await request(app)
         .post('/api/login')
         .send({
-          email: 'rodrigo.manguinho@gmail.com',
+          email: 'camila@mail.com',
           password: '123'
         })
         .expect(200)
@@ -64,7 +68,7 @@ describe('Login Routes', () => {
       await request(app)
         .post('/api/login')
         .send({
-          email: 'rodrigo.manguinho@gmail.com',
+          email: 'camila@mail.com',
           password: '123'
         })
         .expect(401)

@@ -1,8 +1,11 @@
 import { gql } from 'apollo-server-express'
 
-// não pode criar query vazia
 export default gql`
-  extend type Query {
+  scalar DateTime
+
+  directive @auth on FIELD_DEFINITION
+  
+  type Query {
     _: String
   }
 

@@ -7,9 +7,9 @@ const makeSut = (): LogMongoRepository => {
   return new LogMongoRepository()
 }
 
-describe('LogMongoRepository', () => {
-  let errorCollection: Collection
+let errorCollection: Collection
 
+describe('LogMongoRepository', () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
   })
@@ -19,7 +19,7 @@ describe('LogMongoRepository', () => {
   })
 
   beforeEach(async () => {
-    errorCollection = await MongoHelper.getCollection('errors')
+    errorCollection = MongoHelper.getCollection('errors')
     await errorCollection.deleteMany({})
   })
 
@@ -30,3 +30,21 @@ describe('LogMongoRepository', () => {
     expect(count).toBe(1)
   })
 })
+
+// describe('Mongo Helper', () => {
+//   beforeAll(async () => {
+//     await sut.connect(process.env.MONGO_URL)
+//   })
+
+//   afterAll(async () => {
+//     await sut.disconnect()
+//   })
+
+//   test('Should reconnect if mongodb is down', async () => {
+//     let accountCollection = await sut.getCollection('accounts')
+//     expect(accountCollection).toBeTruthy()
+//     await sut.disconnect()
+//     accountCollection = await sut.getCollection('accounts')
+//     expect(accountCollection).toBeTruthy()
+//   })
+// })
